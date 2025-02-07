@@ -1,7 +1,7 @@
 "use server";
 
 import { db } from "@/lib/prisma";
-import { auth } from "@clerk/nextjs/dist/types/server";
+import { auth } from "@clerk/nextjs/server";
 import { GoogleGenerativeAI } from "@google/generative-ai";
 import { revalidatePath } from "next/cache";
 
@@ -19,7 +19,7 @@ export async function saveResume(content) {
   if (!user) throw new Error("User not found");
 
   try {
-    const resume = await db.resume.upsert({
+    const resume = await db.resume.upsert({   //upsert = update/insert
       where: {
         userId: user.id,
       },
