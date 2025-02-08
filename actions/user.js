@@ -4,10 +4,13 @@ import { db } from "@/lib/prisma";
 
 import { revalidatePath } from "next/cache";
 import { generateAIInsights } from "./dashboard";
-import { auth } from "@clerk/nextjs/dist/types/server";
+import { auth } from "@clerk/nextjs/server";
 
 
 export async function updateUser(data) {
+
+  // console.log("Received data in updateUser:", data)
+
   const { userId } = await auth();
   if (!userId) throw new Error("Unauthorized");
 
@@ -18,7 +21,7 @@ export async function updateUser(data) {
   if (!user) throw new Error("User not found");
 
   try {
-    // Start a transaction to handle both operations
+    // Start a transaction to handle ALL operations, if any operations fail then the transaction will stop
     const result = await db.$transaction(
       async (tx) => {
         // First check if industry exists
@@ -68,6 +71,8 @@ export async function updateUser(data) {
     throw new Error("Failed to update profile");
   }
 }
+
+
 
 export async function getUserOnboardingStatus() {
   const { userId } = await auth();

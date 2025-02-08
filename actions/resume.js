@@ -96,3 +96,44 @@ export async function improveWithAI({ current, type }) {
     throw new Error("Failed to improve content");
   }
 }
+
+
+
+export async function improveProfessionalSummary({ current }) {
+  const { userId } = await auth();
+  if (!userId) throw new Error("Unauthorized");
+
+  const user = await db.user.findUnique({
+    where: { clerkUserId: userId },
+    include: {
+      industryInsight: true,
+    },
+  });
+
+  if (!user) throw new Error("User not found");
+
+  const prompt = `
+    As an expert career coach and resume writer, improve the following professional summary for a ${user.industry} professional.
+    Make it compelling, results-driven, and aligned with industry standards.
+    Current professional summary: "${current}"
+
+    Requirements:
+    1. Use a strong opening statement to capture attention.
+    2. Highlight key skills and expertise relevant to ${user.industry}.
+    3. Showcase achievements with measurable impact.
+    4. Keep it engaging, concise, and professional.
+    5. Use industry-specific keywords for ATS optimization.
+    
+    Format the response as a single paragraph without any additional text or explanations.
+  `;
+
+  try {
+    const result = await model.generateContent(prompt);
+    const response = result.response;
+    const improvedSummary = response.text().trim();
+    return improvedSummary;
+  } catch (error) {
+    console.error("Error improving professional summary:", error);
+    throw new Error("Failed to improve professional summary");
+  }
+}

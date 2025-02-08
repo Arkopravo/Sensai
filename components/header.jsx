@@ -19,7 +19,7 @@ import {
 } from "./ui/dropdown-menu";
 import { checkUser } from "@/lib/checkUser";
 
-const Header = async() => {
+const Header = async () => {
 
   await checkUser();
 

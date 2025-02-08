@@ -32,6 +32,7 @@ export const generateAIInsights = async (industry) => {
     const response = result.response;
     const text = response.text();
     const cleanedText = text.replace(/```(?:json)?\n?/g, "").trim();
+    // console.log("cleanedText -> ", cleanedText);
 
     return JSON.parse(cleanedText);
 };
@@ -46,8 +47,13 @@ export async function getIndustryInsights() {
             industryInsight: true,
         },
     });
+    // console.log("user -> ", user)
 
     if (!user) throw new Error("User not found");
+
+    if (!user.industry) {
+        throw new Error("Industry is missing for the user. Please update your profile.");
+    }
 
     // If no insights exist, generate them
     if (!user.industryInsight) {

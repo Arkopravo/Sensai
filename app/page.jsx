@@ -16,7 +16,7 @@ const page = () => {
 
   return (
     <div>
-      <HeroSection/>
+      <HeroSection />
 
       <section className="w-full py-12 md:py-24 lg:py-32 bg-background">
         <div className="container mx-auto px-4 md:px-6">
@@ -29,7 +29,7 @@ const page = () => {
 
               return (
                 <Card key={index}
-                className="border-2 hover:border-primary transition-colors duration-300">
+                  className="border-2 hover:border-primary transition-colors duration-300">
                   <CardContent className="pt-6 text-center flex flex-col items-center">
                     <div className="flex flex-col items-center justify-center">{feature.icon}</div>
                     <h3 className="text-xl font-bold mb-2">{feature.title}</h3>

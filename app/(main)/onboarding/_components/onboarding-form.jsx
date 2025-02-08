@@ -43,6 +43,12 @@ const OnboardingForm = ({ industries }) => {
 
   const onSubmit = async (values) => {
     try {
+
+      if (!values.industry || !values.subIndustry) {
+        toast.error("Please select both an industry and a specialization.");
+        return;
+      }
+
       const formattedIndustry = `${values.industry}-${values.subIndustry
         .toLowerCase()
         .replace(/ /g, "-")}`;
@@ -63,10 +69,10 @@ const OnboardingForm = ({ industries }) => {
       router.refresh();
     }
   }, [updateResult, updateLoading]);
-  
+
 
   const watchIndustry = watch("industry");
-  
+
 
   return (
     <div className="flex items-center justify-center bg-background">
@@ -90,12 +96,12 @@ const OnboardingForm = ({ industries }) => {
             <div className="space-y-2">
               <Label htmlFor="industry">Industry</Label>
               <Select onValueChange={(value) => {
-                  setValue("industry", value);
-                  setSelectedIndustry(
-                    industries.find((ind) => ind.id === value)
-                  );
-                  setValue("subIndustry", "");
-                }}>
+                setValue("industry", value);
+                setSelectedIndustry(
+                  industries.find((ind) => ind.id === value)
+                );
+                setValue("subIndustry", "");
+              }}>
                 <SelectTrigger id="industry">
                   <SelectValue placeholder="Select an industry" />
                 </SelectTrigger>
@@ -143,12 +149,12 @@ const OnboardingForm = ({ industries }) => {
               </div>
             )}
 
-            <div className="space-y-2"> 
+            <div className="space-y-2">
               <Label htmlFor="experience">Years of Experience</Label>
               <Input
                 id="experience"
                 type="number"
-                min="0" 
+                min="0"
                 max="50"
                 placeholder="Enter years of experience"
                 {...register("experience")}

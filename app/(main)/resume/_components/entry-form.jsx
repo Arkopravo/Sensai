@@ -1,3 +1,4 @@
+// app/resume/_components/entry-form.jsx
 "use client";
 
 import { useEffect, useState } from "react";
@@ -26,8 +27,7 @@ const formatDisplayDate = (dateString) => {
   return format(date, "MMM yyyy");
 };
 
-const EntryForm = ({ type, entries, onChange }) => {
-
+export function EntryForm({ type, entries, onChange }) {
   const [isAdding, setIsAdding] = useState(false);
 
   const {
@@ -100,7 +100,6 @@ const EntryForm = ({ type, entries, onChange }) => {
       type: type.toLowerCase(), // 'experience', 'education', or 'project'
     });
   };
-
 
   return (
     <div className="space-y-4">
@@ -271,7 +270,5 @@ const EntryForm = ({ type, entries, onChange }) => {
         </Button>
       )}
     </div>
-  )
+  );
 }
-
-export default EntryForm

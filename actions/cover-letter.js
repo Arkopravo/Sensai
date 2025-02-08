@@ -14,6 +14,7 @@ export async function generateCoverLetter(data) {
   const user = await db.user.findUnique({
     where: { clerkUserId: userId },
   });
+  // console.log("user ->", user)
 
   if (!user) throw new Error("User not found");
 
